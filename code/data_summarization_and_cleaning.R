@@ -3,7 +3,7 @@
 # 
 # R script for data summarization and cleaning
 #
-setwd("~/repos/hotcode-r-workshop/")
+setwd("~/repos/r-workshop/")
 
 # Import data
 train <- read.csv("data/train.csv")

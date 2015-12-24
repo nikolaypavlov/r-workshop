@@ -175,10 +175,10 @@ Can we use data collected by smartphone to predict human motions?
 ---
 ## Find the data
 
-<img class=center src=assets/img/uci-dataset.png height='5%'/>
+<img class=center src=assets/img/uci-dataset.png height='80%'/>
 
-1. http://github.com/nikolaypavlov/hotcode-r-workshop
-2. http://www.bit.ly/hotcode-r
+1. Git: http://nikolaypavlov.github.com/r-workshop
+2. Zip archive: http://bit.ly/r-workshop
 3. Original: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
 ---
@@ -208,6 +208,7 @@ class(), str(), as.factor(), as.numeric(), options(stringsAsFactors=F)
 ```
 unique(), levels()
 ```
+Note: specify a working dir by running `setwd()` command.
 
 ---
 

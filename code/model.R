@@ -3,7 +3,7 @@
 #
 # Statistical modeling and prediction script
 #
-setwd("~/repos/hotcode-r-workshop/")
+setwd("~/repos/r-workshop/")
 source("code/data_summarization_and_cleaning.R")
 
 # Load additional libraries
