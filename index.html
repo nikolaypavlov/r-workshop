@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Human Motion Recognition with R</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Human Motion Recognition with R">
+  <meta name="author" content="Mykola Pavlov">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Human Motion Recognition with R</h1>
+    <h2>Workshop</h2>
+    <p>Mykola Pavlov<br/>Data Scientist at azzurro.io</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Topics</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Intro to R</li>
+<li>What is Data?</li>
+<li>Study Design</li>
+<li>Prediction and modeling</li>
+<li>Tricks and Tunning</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>What is R?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>R is a free software programming language and a software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis.</p>
+
+<ul>
+<li>Download R: <a href="http://www.r-project.org/">http://www.r-project.org/</a></li>
+<li>Download R Studio: <a href="http://www.rstudio.com/">http://www.rstudio.com/</a></li>
+<li>Install the following packages: tree, randomForest, nnet, caret, e1071, kernlab</li>
+<li>Download R Reference Card: <a href="http://cran.r-project.org/doc/contrib/Short-refcard.pdf">http://cran.r-project.org/doc/contrib/Short-refcard.pdf</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Examples</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>R&#39;s data structures include scalars, vectors, matrices, data frames and lists.</p>
+
+<pre><code class="r">x &lt;- c(1,2,3,4,5,6)     # Vector
+y &lt;- x^2                # Square the elements of x
+print(y)                # print (vector) y
+</code></pre>
+
+<pre><code>## [1]  1  4  9 16 25 36
+</code></pre>
+
+<pre><code class="r">mean(y)                 # Calculate average (arithmetic mean) of (vector)
+</code></pre>
+
+<pre><code>## [1] 15.16667
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Examples</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>help(plot)              # Documentation
+</code></pre>
+
+<pre><code class="r">plot(x,y, type=&quot;l&quot;)     # plot x, y
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Examples</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">head(iris)              # return the first part of the Iris data frame
+</code></pre>
+
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+## 1          5.1         3.5          1.4         0.2
+## 2          4.9         3.0          1.4         0.2
+## 3          4.7         3.2          1.3         0.2
+## 4          4.6         3.1          1.5         0.2
+## 5          5.0         3.6          1.4         0.2
+## 6          5.4         3.9          1.7         0.4
+</code></pre>
+
+<pre><code class="r">var &lt;- iris$Species     # assign Species column to var
+print(iris[1,2])        # print the element of 1 row and 2 column
+</code></pre>
+
+<pre><code>## [1] 3.5
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>for() loop vs lapply, sapply, aggregate, split</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">iris[iris$Sepal.Length &lt; 5, ] &lt;- iris[iris$Sepal.Length &lt; 5, ] * 2
+mtcars_subs &lt;- mtcars[mtcars$am == 1, ]
+aggregate(mpg ~ cyl, data=mtcars_subs, FUN=mean)
+</code></pre>
+
+<pre><code>##   cyl      mpg
+## 1   4 28.07500
+## 2   6 20.56667
+## 3   8 15.40000
+</code></pre>
+
+<pre><code class="r">sapply(split(mtcars_subs$mpg, mtcars_subs$cyl), mean)
+</code></pre>
+
+<pre><code>##        4        6        8 
+## 28.07500 20.56667 15.40000
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>What is Data?</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Quantitative and Continuous</h3>
+
+<pre><code class="r">temperature &lt;- c(36.6, 37.23, -12.3124)
+</code></pre>
+
+<h3>Quantitative and Discrete</h3>
+
+<pre><code class="r">dice &lt;- c(1,2,3,4,5,6)
+</code></pre>
+
+<h3>Qualitative</h3>
+
+<pre><code class="r">colors &lt;- as.factor(c(&quot;red&quot;, &quot;blue&quot;, &quot;gray&quot;, &quot;yellow&quot;, &quot;gray&quot;,&quot;blue&quot;))
+levels(colors)
+</code></pre>
+
+<pre><code>## [1] &quot;blue&quot;   &quot;gray&quot;   &quot;red&quot;    &quot;yellow&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Study Design</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Question</li>
+<li>Define the ideal data set</li>
+<li>Find the data</li>
+<li>Clean it</li>
+<li>Explore the data</li>
+<li>Prediction and modeling</li>
+<li>Interpretation of results</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Question</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Can we use data collected by smartphone to predict human motions?</p>
+
+<ul>
+<li>Walking</li>
+<li>Walking upstairs</li>
+<li>Walking downstairs</li>
+<li>Sitting</li>
+<li>Standing</li>
+<li>Laying</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Ideal Data Set</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Each var forms a column, observation is a row.</li>
+<li>Table stores data about one kind of observation.</li>
+</ul>
+
+<p><img class=center src=assets/img/dataset.gif height='80%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Find the data</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img class=center src=assets/img/uci-dataset.png height='5%'/></p>
+
+<ol>
+<li><a href="http://github.com/nikolaypavlov/hotcode-r-workshop">http://github.com/nikolaypavlov/hotcode-r-workshop</a></li>
+<li><a href="http://www.bit.ly/hotcode-r">http://www.bit.ly/hotcode-r</a></li>
+<li>Original: <a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones">http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones</a></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Data Sets specs</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>For each record in the dataset it is provided: </p>
+
+<ul>
+<li>3-axial acceleration from the accelerometer and the estimated body acceleration</li>
+<li>3-axial Angular velocity from the gyroscope</li>
+<li>A 561-feature vector with time and frequency domain variables</li>
+<li>Activity label</li>
+<li>An identifier of the subject who carried out the experiment. (30 volunteers)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Summarizing and cleaning the data</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Open code/data_summarization_and_cleaning.R</p>
+
+<ul>
+<li><p>Was the data written correctly?</p>
+
+<pre><code>dim(), names(), nrow(), ncol(), head(), tail()
+</code></pre></li>
+<li><p>Does R recognized the var type correctly?</p>
+
+<pre><code>class(), str(), as.factor(), as.numeric(), options(stringsAsFactors=F)
+</code></pre></li>
+<li><p>What are the values that qualitative var takes?</p>
+
+<pre><code>unique(), levels()
+</code></pre></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <ul>
+<li><p>How many vars do you have?</p>
+
+<pre><code>length()
+</code></pre></li>
+<li><p>Are the values inside expected ranges?</p>
+
+<pre><code>quantile()
+</code></pre></li>
+<li><p>See if some var is missing or has some logical value?</p>
+
+<pre><code>any()
+</code></pre></li>
+<li><p>What about missing data?</p>
+
+<pre><code>is.na(), impute()
+</code></pre></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <article data-timings="">
+    <ul>
+<li><p>Shell we fix variable names?</p>
+
+<pre><code>names(), tolower(), sub(), gsub()
+</code></pre></li>
+<li><p>Shell we apply the data transformation?</p>
+
+<pre><code>transform()
+</code></pre></li>
+<li><p>Shell the new vars be created?</p>
+
+<pre><code>rbind(), cbind()
+</code></pre></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Steps of Prediction Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Find the right data</li>
+<li>Define your error rate</li>
+<li>Split data into: Training, Testing</li>
+<li>On the training set pick features</li>
+<li>On the training set pick prediction function</li>
+<li>On the training set cross-validate</li>
+<li>Apply once to test set</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Statistical modeling and prediction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Open code/model.R and try Random Forest, Neural Network, SVM models</p>
+
+<ul>
+<li>What is you benchmark model and error rate?</li>
+<li>Which model to choose from?</li>
+<li>Which activity class is harder to predict?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>High Bias vs High Varience tradeoff</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>You have selected the model, but still not satisfied with the perfomance.
+What to do next?</p>
+
+<ul>
+<li>More training examples?</li>
+<li>Less features?</li>
+<li>More features?</li>
+<li>Less complex model?</li>
+<li>More complex model?</li>
+</ul>
+
+<p>To answer this questions you need to find out if your model suffer from high bias or high varience.
+Open code/ml_diagnostic.R</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Solutions: High Bias vs High Varience</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>More training examples -&gt; Fixes high varience </li>
+<li>Less features -&gt; Fixes high varience </li>
+<li>More features -&gt; Fixes high bias</li>
+<li>Less complex model (in terms of regularization parameter) -&gt; Fixes high bias</li>
+<li>More complex model (in terms of regularization parameter) -&gt; Fixes high varience </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>How well does the model generalize?</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>K-fold cross-validation</h3>
+
+<p><img class=center src=assets/img/k-fold-validation.gif /></p>
+
+<ul>
+<li>Picking variables to include in a model</li>
+<li>Picking the type of prediction function to use</li>
+<li>Picking the parameters in the prediction function</li>
+<li>Comparing different predictors</li>
+</ul>
+
+<p><a href="http://www.imada.sdu.dk/%7Emarco/DM825/">http://www.imada.sdu.dk/~marco/DM825/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Hyperparameters tunning and cross-validation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Open code/model_tunning.R and try to tune hyperparams of different models</p>
+
+<ul>
+<li>Can you find optimal hyperparameters?</li>
+<li>Which model is the best?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Many Thanks to</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Jeffrey Leek for the Data Analysis course:</h3>
+
+<p><a href="http://www.youtube.com/watch?v=OfgjgEXxskg&amp;list=PLXBDYmaCbeL8efhOZS4g9W6Z3m9_hFSnT">http://www.youtube.com/watch?v=OfgjgEXxskg&amp;list=PLXBDYmaCbeL8efhOZS4g9W6Z3m9_hFSnT</a></p>
+
+<h3>Kaggle.com for the awesome Spying Smartphone competition:</h3>
+
+<p><a href="https://inclass.kaggle.com/c/predict-human-activity-using-smartphones">https://inclass.kaggle.com/c/predict-human-activity-using-smartphones</a></p>
+
+<h3>Andrew Ng for the Machine Learning course:</h3>
+
+<p><a href="https://www.coursera.org/course/ml">https://www.coursera.org/course/ml</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Contacts</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Mykola Pavlov</h3>
+
+<ul>
+<li>E-mail: <a href="mailto:me@nikolaypavlov.com">me@nikolaypavlov.com</a> </li>
+<li>Linkedin: <a href="http://linkedin.com/in/nikolaypavlov">http://linkedin.com/in/nikolaypavlov</a></li>
+<li>Github: <a href="https://github.com/nikolaypavlov">https://github.com/nikolaypavlov</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Topics'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='What is R?'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Examples'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Examples'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Examples'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='for() loop vs lapply, sapply, aggregate, split'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='What is Data?'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Study Design'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Question'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Ideal Data Set'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Find the data'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Data Sets specs'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Summarizing and cleaning the data'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='NA'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='NA'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Steps of Prediction Analysis'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Statistical modeling and prediction'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='High Bias vs High Varience tradeoff'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Solutions: High Bias vs High Varience'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='How well does the model generalize?'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Hyperparameters tunning and cross-validation'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Many Thanks to'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Contacts'>
+         23
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
