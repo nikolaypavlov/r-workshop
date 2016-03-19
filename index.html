@@ -112,7 +112,7 @@ print(y)                # print (vector) y
 <pre><code class="r">plot(x,y, type=&quot;l&quot;)     # plot x, y
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -126,13 +126,13 @@ print(y)                # print (vector) y
     <pre><code class="r">head(iris)              # return the first part of the Iris data frame
 </code></pre>
 
-<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width
-## 1          5.1         3.5          1.4         0.2
-## 2          4.9         3.0          1.4         0.2
-## 3          4.7         3.2          1.3         0.2
-## 4          4.6         3.1          1.5         0.2
-## 5          5.0         3.6          1.4         0.2
-## 6          5.4         3.9          1.7         0.4
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
 </code></pre>
 
 <pre><code class="r">var &lt;- iris$Species     # assign Species column to var
@@ -151,7 +151,7 @@ print(iris[1,2])        # print the element of 1 row and 2 column
     <h2>for() loop vs lapply, sapply, aggregate, split</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">iris[iris$Sepal.Length &lt; 5, ] &lt;- iris[iris$Sepal.Length &lt; 5, ] * 2
+    <pre><code class="r">iris[iris$Sepal.Length &lt; 5, 1:3] &lt;- iris[iris$Sepal.Length &lt; 5, 1:3] * 2
 mtcars_subs &lt;- mtcars[mtcars$am == 1, ]
 aggregate(mpg ~ cyl, data=mtcars_subs, FUN=mean)
 </code></pre>
@@ -434,8 +434,8 @@ Open code/ml_diagnostic.R</p>
 <li>More training examples -&gt; Fixes high varience </li>
 <li>Less features -&gt; Fixes high varience </li>
 <li>More features -&gt; Fixes high bias</li>
-<li>Less complex model (in terms of regularization parameter) -&gt; Fixes high bias</li>
-<li>More complex model (in terms of regularization parameter) -&gt; Fixes high varience </li>
+<li>Less complex model (in terms of regularization parameter) -&gt; Fixes high varience</li>
+<li>More complex model (in terms of regularization parameter) -&gt; Fixes high bias</li>
 </ul>
 
   </article>

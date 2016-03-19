@@ -64,7 +64,7 @@ help(plot)              # Documentation
 plot(x,y, type="l")     # plot x, y
 ```
 
-![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png)
 
 ---
 ## Examples
@@ -74,13 +74,13 @@ head(iris)              # return the first part of the Iris data frame
 ```
 
 ```
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width
-## 1          5.1         3.5          1.4         0.2
-## 2          4.9         3.0          1.4         0.2
-## 3          4.7         3.2          1.3         0.2
-## 4          4.6         3.1          1.5         0.2
-## 5          5.0         3.6          1.4         0.2
-## 6          5.4         3.9          1.7         0.4
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
 ```
 
 ```r
@@ -96,7 +96,7 @@ print(iris[1,2])        # print the element of 1 row and 2 column
 ## for() loop vs lapply, sapply, aggregate, split
 
 ```r
-iris[iris$Sepal.Length < 5, ] <- iris[iris$Sepal.Length < 5, ] * 2
+iris[iris$Sepal.Length < 5, 1:3] <- iris[iris$Sepal.Length < 5, 1:3] * 2
 mtcars_subs <- mtcars[mtcars$am == 1, ]
 aggregate(mpg ~ cyl, data=mtcars_subs, FUN=mean)
 ```
@@ -289,8 +289,8 @@ Open code/ml_diagnostic.R
 * More training examples -> Fixes high varience 
 * Less features -> Fixes high varience 
 * More features -> Fixes high bias
-* Less complex model (in terms of regularization parameter) -> Fixes high bias
-* More complex model (in terms of regularization parameter) -> Fixes high varience 
+* Less complex model (in terms of regularization parameter) -> Fixes high varience
+* More complex model (in terms of regularization parameter) -> Fixes high bias
 
 ---
 ## How well does the model generalize?
