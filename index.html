@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Human Motion Recognition with R</title>
+  <title>Data Analysis with R</title>
   <meta charset="utf-8">
-  <meta name="description" content="Human Motion Recognition with R">
+  <meta name="description" content="Data Analysis with R">
   <meta name="author" content="Mykola Pavlov">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,9 +32,9 @@
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
-    <h1>Human Motion Recognition with R</h1>
-    <h2>Workshop</h2>
-    <p>Mykola Pavlov<br/>Data Scientist at azzurro.io</p>
+    <h1>Data Analysis with R</h1>
+    <h2>Predictive analytics</h2>
+    <p>Mykola Pavlov<br/>Data Scientist at Azzurro.io</p>
   </hgroup>
   <article></article>  
 </slide>
@@ -43,12 +43,26 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
   <hgroup>
+    <h2>Course Logistic</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Every Wednesday 19:00 - 21:00</li>
+<li>Slides: <a href="http://nikolaypavlov.github.io/da-workshops-8/">http://nikolaypavlov.github.io/da-workshops-8/</a></li>
+<li>Skype Chat: <a href="https://join.skype.com/gjN0CfAd4bhg">https://join.skype.com/gjN0CfAd4bhg</a></li>
+<li>Install the following packages: tree, randomForest, nnet, caret, e1071, kernlab</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
     <h2>Topics</h2>
   </hgroup>
   <article data-timings="">
     <ul>
-<li>Intro to R</li>
-<li>What is Data?</li>
 <li>Study Design</li>
 <li>Prediction and modeling</li>
 <li>Tricks and Tunning</li>
@@ -58,150 +72,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-2" style="background:;">
-  <hgroup>
-    <h2>What is R?</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>R is a free software programming language and a software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis.</p>
-
-<ul>
-<li>Download R: <a href="http://www.r-project.org/">http://www.r-project.org/</a></li>
-<li>Download R Studio: <a href="http://www.rstudio.com/">http://www.rstudio.com/</a></li>
-<li>Install the following packages: tree, randomForest, nnet, caret, e1071, kernlab</li>
-<li>Download R Reference Card: <a href="http://cran.r-project.org/doc/contrib/Short-refcard.pdf">http://cran.r-project.org/doc/contrib/Short-refcard.pdf</a></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
 <slide class="" id="slide-3" style="background:;">
-  <hgroup>
-    <h2>Examples</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>R&#39;s data structures include scalars, vectors, matrices, data frames and lists.</p>
-
-<pre><code class="r">x &lt;- c(1,2,3,4,5,6)     # Vector
-y &lt;- x^2                # Square the elements of x
-print(y)                # print (vector) y
-</code></pre>
-
-<pre><code>## [1]  1  4  9 16 25 36
-</code></pre>
-
-<pre><code class="r">mean(y)                 # Calculate average (arithmetic mean) of (vector)
-</code></pre>
-
-<pre><code>## [1] 15.16667
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-4" style="background:;">
-  <hgroup>
-    <h2>Examples</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code>help(plot)              # Documentation
-</code></pre>
-
-<pre><code class="r">plot(x,y, type=&quot;l&quot;)     # plot x, y
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-5" style="background:;">
-  <hgroup>
-    <h2>Examples</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">head(iris)              # return the first part of the Iris data frame
-</code></pre>
-
-<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 1          5.1         3.5          1.4         0.2  setosa
-## 2          4.9         3.0          1.4         0.2  setosa
-## 3          4.7         3.2          1.3         0.2  setosa
-## 4          4.6         3.1          1.5         0.2  setosa
-## 5          5.0         3.6          1.4         0.2  setosa
-## 6          5.4         3.9          1.7         0.4  setosa
-</code></pre>
-
-<pre><code class="r">var &lt;- iris$Species     # assign Species column to var
-print(iris[1,2])        # print the element of 1 row and 2 column
-</code></pre>
-
-<pre><code>## [1] 3.5
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-6" style="background:;">
-  <hgroup>
-    <h2>for() loop vs lapply, sapply, aggregate, split</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">iris[iris$Sepal.Length &lt; 5, 1:3] &lt;- iris[iris$Sepal.Length &lt; 5, 1:3] * 2
-mtcars_subs &lt;- mtcars[mtcars$am == 1, ]
-aggregate(mpg ~ cyl, data=mtcars_subs, FUN=mean)
-</code></pre>
-
-<pre><code>##   cyl      mpg
-## 1   4 28.07500
-## 2   6 20.56667
-## 3   8 15.40000
-</code></pre>
-
-<pre><code class="r">sapply(split(mtcars_subs$mpg, mtcars_subs$cyl), mean)
-</code></pre>
-
-<pre><code>##        4        6        8 
-## 28.07500 20.56667 15.40000
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-7" style="background:;">
-  <hgroup>
-    <h2>What is Data?</h2>
-  </hgroup>
-  <article data-timings="">
-    <h3>Quantitative and Continuous</h3>
-
-<pre><code class="r">temperature &lt;- c(36.6, 37.23, -12.3124)
-</code></pre>
-
-<h3>Quantitative and Discrete</h3>
-
-<pre><code class="r">dice &lt;- c(1,2,3,4,5,6)
-</code></pre>
-
-<h3>Qualitative</h3>
-
-<pre><code class="r">colors &lt;- as.factor(c(&quot;red&quot;, &quot;blue&quot;, &quot;gray&quot;, &quot;yellow&quot;, &quot;gray&quot;,&quot;blue&quot;))
-levels(colors)
-</code></pre>
-
-<pre><code>## [1] &quot;blue&quot;   &quot;gray&quot;   &quot;red&quot;    &quot;yellow&quot;
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Study Design</h2>
   </hgroup>
@@ -220,7 +91,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-9" style="background:;">
+<slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Question</h2>
   </hgroup>
@@ -240,7 +111,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:;">
+<slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Ideal Data Set</h2>
   </hgroup>
@@ -256,7 +127,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>Find the data</h2>
   </hgroup>
@@ -264,7 +135,7 @@ levels(colors)
     <p><img class=center src=assets/img/uci-dataset.png height='80%'/></p>
 
 <ol>
-<li>Git: <a href="http://nikolaypavlov.github.com/r-workshop">http://nikolaypavlov.github.com/r-workshop</a></li>
+<li>Git: <a href="http://github.com/nikolaypavlov/da-workshops-8/">http://github.com/nikolaypavlov/da-workshops-8/</a></li>
 <li>Zip archive: <a href="http://bit.ly/r-workshop">http://bit.ly/r-workshop</a></li>
 <li>Original: <a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones">http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones</a></li>
 </ol>
@@ -273,7 +144,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Data Sets specs</h2>
   </hgroup>
@@ -292,7 +163,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Summarizing and cleaning the data</h2>
   </hgroup>
@@ -320,7 +191,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-14" style="background:;">
+<slide class="" id="slide-9" style="background:;">
   <article data-timings="">
     <ul>
 <li><p>How many vars do you have?</p>
@@ -345,7 +216,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
+<slide class="" id="slide-10" style="background:;">
   <article data-timings="">
     <ul>
 <li><p>Shell we fix variable names?</p>
@@ -366,7 +237,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Steps of Prediction Analysis</h2>
   </hgroup>
@@ -385,7 +256,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-17" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Statistical modeling and prediction</h2>
   </hgroup>
@@ -402,7 +273,7 @@ levels(colors)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-18" style="background:;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>High Bias vs High Varience tradeoff</h2>
   </hgroup>
@@ -425,7 +296,7 @@ Open code/ml_diagnostic.R</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Solutions: High Bias vs High Varience</h2>
   </hgroup>
@@ -442,7 +313,7 @@ Open code/ml_diagnostic.R</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>How well does the model generalize?</h2>
   </hgroup>
@@ -458,13 +329,11 @@ Open code/ml_diagnostic.R</p>
 <li>Comparing different predictors</li>
 </ul>
 
-<p><a href="http://www.imada.sdu.dk/%7Emarco/DM825/">http://www.imada.sdu.dk/~marco/DM825/</a></p>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Hyperparameters tunning and cross-validation</h2>
   </hgroup>
@@ -480,38 +349,15 @@ Open code/ml_diagnostic.R</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
-    <h2>Many Thanks to</h2>
+    <h2>Course Logistic</h2>
   </hgroup>
   <article data-timings="">
-    <h3>Jeffrey Leek for the Data Analysis course:</h3>
-
-<p><a href="http://www.youtube.com/watch?v=OfgjgEXxskg&amp;list=PLXBDYmaCbeL8efhOZS4g9W6Z3m9_hFSnT">http://www.youtube.com/watch?v=OfgjgEXxskg&amp;list=PLXBDYmaCbeL8efhOZS4g9W6Z3m9_hFSnT</a></p>
-
-<h3>Kaggle.com for the awesome Spying Smartphone competition:</h3>
-
-<p><a href="https://inclass.kaggle.com/c/predict-human-activity-using-smartphones">https://inclass.kaggle.com/c/predict-human-activity-using-smartphones</a></p>
-
-<h3>Andrew Ng for the Machine Learning course:</h3>
-
-<p><a href="https://www.coursera.org/course/ml">https://www.coursera.org/course/ml</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-23" style="background:;">
-  <hgroup>
-    <h2>Contacts</h2>
-  </hgroup>
-  <article data-timings="">
-    <h3>Mykola Pavlov</h3>
-
-<ul>
-<li>E-mail: <a href="mailto:me@nikolaypavlov.com">me@nikolaypavlov.com</a> </li>
-<li>Linkedin: <a href="http://linkedin.com/in/nikolaypavlov">http://linkedin.com/in/nikolaypavlov</a></li>
-<li>Github: <a href="https://github.com/nikolaypavlov">https://github.com/nikolaypavlov</a></li>
+    <ul>
+<li>Every Wednesday 19:00 - 21:00</li>
+<li>Slides: <a href="http://nikolaypavlov.github.io/da-workshops-8/">http://nikolaypavlov.github.io/da-workshops-8/</a></li>
+<li>Skype Chat: <a href="https://join.skype.com/gjN0CfAd4bhg">https://join.skype.com/gjN0CfAd4bhg</a></li>
 </ul>
 
   </article>
@@ -524,140 +370,104 @@ Open code/ml_diagnostic.R</p>
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Topics'>
+        data-slide=1 title='Course Logistic'>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='What is R?'>
+        data-slide=2 title='Topics'>
          2
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='Examples'>
+        data-slide=3 title='Study Design'>
          3
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Examples'>
+        data-slide=4 title='Question'>
          4
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Examples'>
+        data-slide=5 title='Ideal Data Set'>
          5
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='for() loop vs lapply, sapply, aggregate, split'>
+        data-slide=6 title='Find the data'>
          6
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='What is Data?'>
+        data-slide=7 title='Data Sets specs'>
          7
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Study Design'>
+        data-slide=8 title='Summarizing and cleaning the data'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Question'>
+        data-slide=9 title='NA'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Ideal Data Set'>
+        data-slide=10 title='NA'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Find the data'>
+        data-slide=11 title='Steps of Prediction Analysis'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Data Sets specs'>
+        data-slide=12 title='Statistical modeling and prediction'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Summarizing and cleaning the data'>
+        data-slide=13 title='High Bias vs High Varience tradeoff'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='NA'>
+        data-slide=14 title='Solutions: High Bias vs High Varience'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='NA'>
+        data-slide=15 title='How well does the model generalize?'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Steps of Prediction Analysis'>
+        data-slide=16 title='Hyperparameters tunning and cross-validation'>
          16
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='Statistical modeling and prediction'>
+        data-slide=17 title='Course Logistic'>
          17
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='High Bias vs High Varience tradeoff'>
-         18
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='Solutions: High Bias vs High Varience'>
-         19
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='How well does the model generalize?'>
-         20
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Hyperparameters tunning and cross-validation'>
-         21
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Many Thanks to'>
-         22
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Contacts'>
-         23
       </a>
     </li>
   </ul>
@@ -670,7 +480,21 @@ Open code/ml_diagnostic.R</p>
 </body>
   <!-- Load Javascripts for Widgets -->
   
-  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
   <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->

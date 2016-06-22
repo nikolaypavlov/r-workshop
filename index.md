@@ -1,146 +1,29 @@
 ---
-title       : Human Motion Recognition with R
-subtitle    : Workshop
+title       : Data Analysis with R
+subtitle    : Predictive analytics
 author      : Mykola Pavlov
-job         : Data Scientist at azzurro.io
+job         : Data Scientist at Azzurro.io
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-widgets     : []            # {mathjax, quiz, bootstrap}
+widgets     : [mathjax]     # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 
 ---
+## Course Logistic
+
+* Every Wednesday 19:00 - 21:00
+* Slides: http://nikolaypavlov.github.io/da-workshops-8/
+* Skype Chat: https://join.skype.com/gjN0CfAd4bhg
+* Install the following packages: tree, randomForest, nnet, caret, e1071, kernlab
+
+---
 ## Topics
 
-* Intro to R
-* What is Data?
 * Study Design
 * Prediction and modeling
 * Tricks and Tunning
-
----
-## What is R?
-
-R is a free software programming language and a software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis.
-* Download R: http://www.r-project.org/
-* Download R Studio: http://www.rstudio.com/
-* Install the following packages: tree, randomForest, nnet, caret, e1071, kernlab
-* Download R Reference Card: http://cran.r-project.org/doc/contrib/Short-refcard.pdf
-
----
-## Examples
-
-R's data structures include scalars, vectors, matrices, data frames and lists.
-
-
-```r
-x <- c(1,2,3,4,5,6)     # Vector
-y <- x^2                # Square the elements of x
-print(y)                # print (vector) y
-```
-
-```
-## [1]  1  4  9 16 25 36
-```
-
-```r
-mean(y)                 # Calculate average (arithmetic mean) of (vector)
-```
-
-```
-## [1] 15.16667
-```
-
----
-## Examples
-
-```
-help(plot)              # Documentation
-```
-
-
-```r
-plot(x,y, type="l")     # plot x, y
-```
-
-![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png)
-
----
-## Examples
-
-```r
-head(iris)              # return the first part of the Iris data frame
-```
-
-```
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 1          5.1         3.5          1.4         0.2  setosa
-## 2          4.9         3.0          1.4         0.2  setosa
-## 3          4.7         3.2          1.3         0.2  setosa
-## 4          4.6         3.1          1.5         0.2  setosa
-## 5          5.0         3.6          1.4         0.2  setosa
-## 6          5.4         3.9          1.7         0.4  setosa
-```
-
-```r
-var <- iris$Species     # assign Species column to var
-print(iris[1,2])        # print the element of 1 row and 2 column
-```
-
-```
-## [1] 3.5
-```
-
----
-## for() loop vs lapply, sapply, aggregate, split
-
-```r
-iris[iris$Sepal.Length < 5, 1:3] <- iris[iris$Sepal.Length < 5, 1:3] * 2
-mtcars_subs <- mtcars[mtcars$am == 1, ]
-aggregate(mpg ~ cyl, data=mtcars_subs, FUN=mean)
-```
-
-```
-##   cyl      mpg
-## 1   4 28.07500
-## 2   6 20.56667
-## 3   8 15.40000
-```
-
-
-```r
-sapply(split(mtcars_subs$mpg, mtcars_subs$cyl), mean)
-```
-
-```
-##        4        6        8 
-## 28.07500 20.56667 15.40000
-```
-
----
-## What is Data?
-
-### Quantitative and Continuous
-
-```r
-temperature <- c(36.6, 37.23, -12.3124)
-```
-### Quantitative and Discrete
-
-```r
-dice <- c(1,2,3,4,5,6)
-```
-### Qualitative
-
-```r
-colors <- as.factor(c("red", "blue", "gray", "yellow", "gray","blue"))
-levels(colors)
-```
-
-```
-## [1] "blue"   "gray"   "red"    "yellow"
-```
 
 ---
 ## Study Design
@@ -177,7 +60,7 @@ Can we use data collected by smartphone to predict human motions?
 
 <img class=center src=assets/img/uci-dataset.png height='80%'/>
 
-1. Git: http://nikolaypavlov.github.com/r-workshop
+1. Git: http://github.com/nikolaypavlov/da-workshops-8/
 2. Zip archive: http://bit.ly/r-workshop
 3. Original: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
@@ -304,8 +187,6 @@ Open code/ml_diagnostic.R
 * Picking the parameters in the prediction function
 * Comparing different predictors
 
-http://www.imada.sdu.dk/~marco/DM825/
-
 ---
 ## Hyperparameters tunning and cross-validation
 
@@ -314,20 +195,8 @@ Open code/model_tunning.R and try to tune hyperparams of different models
 * Which model is the best?
 
 ---
-## Many Thanks to
+## Course Logistic
 
-### Jeffrey Leek for the Data Analysis course:
-http://www.youtube.com/watch?v=OfgjgEXxskg&list=PLXBDYmaCbeL8efhOZS4g9W6Z3m9_hFSnT
-### Kaggle.com for the awesome Spying Smartphone competition:
-https://inclass.kaggle.com/c/predict-human-activity-using-smartphones
-### Andrew Ng for the Machine Learning course:
-https://www.coursera.org/course/ml
-
----
-## Contacts
-
-### Mykola Pavlov
- 
-* E-mail: me@nikolaypavlov.com 
-* Linkedin: http://linkedin.com/in/nikolaypavlov
-* Github: https://github.com/nikolaypavlov
+* Every Wednesday 19:00 - 21:00
+* Slides: http://nikolaypavlov.github.io/da-workshops-8/
+* Skype Chat: https://join.skype.com/gjN0CfAd4bhg
